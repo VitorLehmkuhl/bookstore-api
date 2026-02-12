@@ -1,0 +1,39 @@
+using BookStore.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace BookStore.Infrastructure.Context;
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Book> Books => Set<Book>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Book>(entity =>
+        {
+            entity.HasKey(b => b.Id);
+
+            entity.Property(b => b.Title)
+                  .IsRequired()
+                  .HasMaxLength(200);
+
+            entity.Property(b => b.Author)
+                  .IsRequired()
+                  .HasMaxLength(150);
+
+            entity.Property(b => b.Year)
+                  .IsRequired()
+                  .HasMaxLength(20);
+
+            entity.Property(b => b.CoverUrl)
+                  .HasMaxLength(200);
+        });
+    }
+}

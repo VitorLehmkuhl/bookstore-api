@@ -1,0 +1,36 @@
+services:
+  api:
+    build: .
+    container_name: bookstore-api
+    ports:
+      - "5000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=bookstore;Username=postgres;Password=postgres
+      AWS__AccessKey: SUA_KEY
+      AWS__SecretKey: SEU_SECRET
+      AWS__BucketName: bookstore-bucket
+
+  db:
+    image: postgres:15
+    container_name: bookstore-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: bookstore
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
