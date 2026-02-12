@@ -12,5 +12,7 @@ docker compose up -d
 dotnet run --project BookStore.API
 Estará disponivel em: http://localhost:5000/swagger
 
-No Swagger está disponivel todos os endpoints
-Nota: No coverImage mandar como uma string vazia nos endpoints pois não criei um acesso na AWS, mas ele esta com toda a estrutura pronta no codigo, só precisaria mudar no appsettings
+No Swagger estão disponíveis todos os endpoints.
+
+Observação: No campo coverImage, envie uma string vazia nos endpoints, pois não foi configurado o acesso à AWS.
+A estrutura para integração com o S3 já está implementada no código — basta ajustar as configurações no appsettings.
