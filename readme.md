@@ -9,7 +9,7 @@ Na pasta BookStoreSoftDesign rodar:
 docker compose up -d
 
 ### 2- Rodar a API
-dotnet run --project BookStore.API
+dotnet run --project BookStore.API  
 Estará disponivel em: http://localhost:5000/swagger
 
 No Swagger estão disponíveis todos os endpoints.
