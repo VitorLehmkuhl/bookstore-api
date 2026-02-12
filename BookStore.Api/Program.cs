@@ -44,8 +44,16 @@ app.MapControllers();
 // Migration automática
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Erro ao aplicar migration:");
+        Console.WriteLine(ex.Message);
+    }
 }
 
 app.Run();
