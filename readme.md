@@ -5,7 +5,7 @@ API desenvolvida em .NET 9.
 ## Como rodar o projeto
 
 ### 1- Subir o banco
-Na pasta BookStoreSoftDesign rodar: 
+Na raiz do projeto rodar: 
 docker compose up -d
 
 ### 2- Rodar a API
