@@ -16,13 +16,15 @@ namespace BookStore.UnitTests.Services
         public CreateBookServiceTests()
         {
             _repositoryMock = new Mock<IBookRepository>();
-            _bookService = new CreateBookService(_repositoryMock.Object);
+            var s3Config = new BookStore.Application.Helpers.S3();
+            var options = Microsoft.Extensions.Options.Options.Create(s3Config);
+            _bookService = new CreateBookService(_repositoryMock.Object, options);
         }
 
         [Fact]
         public async Task Should_Create_Book_And_Return_Id()
         {
-            var request = new CreateBookRequest("DDD", "Evans", 2003);
+            var request = new CreateBookRequest("DDD", "Evans", 2003, "");
 
             var id = await _bookService.Execute(request);
 

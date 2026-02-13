@@ -16,7 +16,9 @@ namespace BookStore.UnitTests.Services
         public UpdateBookServiceTests()
         {
             _repositoryMock = new Mock<IBookRepository>();
-            _bookService = new UpdateBookService(_repositoryMock.Object);
+            var s3Config = new BookStore.Application.Helpers.S3();
+            var options = Microsoft.Extensions.Options.Options.Create(s3Config);
+            _bookService = new UpdateBookService(_repositoryMock.Object, options);
         }
 
         [Fact]
@@ -28,7 +30,7 @@ namespace BookStore.UnitTests.Services
                 .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(book);
 
-            var request = new UpdateBookRequest("New", "New Author", 2022);
+            var request = new UpdateBookRequest("New", "New Author", 2022, "");
 
             await _bookService.Execute(Guid.NewGuid(), request);
 
